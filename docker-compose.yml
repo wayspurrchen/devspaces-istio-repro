@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  front-app:
+    ports:
+      - "80:80"
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: ["pm2-runtime", "./pm2.json", "--watch"]
+    environment:
+      OTHER_APP_HOSTNAMES: "back-app-1,back-app-2"
+      APP_NAME: "front-app-1"
+    volumes:
+      - ${PWD}/app/view.ejs:/home/app/view.ejs
+      - ${PWD}/app/index.js:/home/app/index.js
+      - ${PWD}/app/functionality.js:/home/app/functionality.js
+  back-app-1:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: ["pm2-runtime", "./pm2.json", "--watch"]
+    environment:
+      APP_NAME: "back-app-1"
+      OTHER_APP_HOSTNAMES: "back-app-2"
+    volumes:
+      - ${PWD}/app/view.ejs:/home/app/view.ejs
+      - ${PWD}/app/index.js:/home/app/index.js
+      - ${PWD}/app/functionality.js:/home/app/functionality.js
+  back-app-2:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: ["pm2-runtime", "./pm2.json", "--watch"]
+    environment:
+      APP_NAME: "back-app-2"
+    volumes:
+      - ${PWD}/app/view.ejs:/home/app/view.ejs
+      - ${PWD}/app/index.js:/home/app/index.js
+      - ${PWD}/app/functionality.js:/home/app/functionality.js

@@ -1,0 +1,18 @@
+replicaCount: 1
+
+instanceConfigs:
+  - appName: "front-app"
+    otherAppHostnames: "back-app-1,back-app-2"
+  - appName: "back-app-1"
+    otherAppHostnames: "back-app-2"
+  - appName: "back-app-2"
+    otherAppHostnames: "back-app-2"
+
+image:
+  repository: gcr.io/<YOUR_PROJECT_HERE>/smt
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+ 

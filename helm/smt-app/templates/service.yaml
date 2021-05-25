@@ -1,0 +1,20 @@
+{{- range .Values.instanceConfigs }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .appName }}
+  labels:
+    app: {{ .appName }}
+    release: {{ $.Release.Name }}
+spec:
+  type: {{ $.Values.service.type }}
+  ports:
+    - port: {{ $.Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ .appName }}
+    release: {{ $.Release.Name }}
+{{- end }}

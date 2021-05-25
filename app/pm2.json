@@ -1,0 +1,11 @@
+{
+    "apps": [
+      {
+        "name": "Service-Mesh-Test-App-Frontend",
+        "script": "./index.js",
+        "instances": "1",
+        "watch": true
+      }
+    ]
+  }
+  

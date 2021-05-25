@@ -1,0 +1,30 @@
+{{- range .Values.instanceConfigs }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .appName }}
+spec:
+  replicas: {{ $.Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .appName }}
+      release: {{ $.Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .appName }}
+        release: {{ $.Release.Name }}
+    spec:
+      containers:
+        - name: {{ .appName }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: {{ .appName }}-config
+{{- end }}

@@ -1,0 +1,18 @@
+{
+  "name": "smt-app",
+  "version": "1.0.0",
+  "description": "Test application for demonstrating service mesh capabilities",
+  "main": "index.js",
+  "scripts": {
+    "docker:build": "docker build -t gcr.io/<YOUR_PROJECT_HERE>/smt:${npm_package_version} .",
+    "docker:push": "docker push gcr.io/<YOUR_PROJECT_HERE>/smt:${npm_package_version}",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "type": "module",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
+}

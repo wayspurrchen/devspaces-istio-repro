@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Mesh Test Frontend App</title>
+
+    <!-- CSS (load bootstrap from a CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { padding-top: 10px; }
+    </style>
+    <script>
+      var output;
+      var request = (url) => {
+        fetch(url).then(async res => {
+          if (res.status >= 200 && res.status < 400) {
+            const result = await res.json();
+            output.innerText = JSON.stringify(result, null, 4);
+          } else {
+            const result = await res.text();
+            const serverErrorResult = `Oh no! The server gave us an error. It probably shouldn't show us the whole trace like that, but oh well:\n\n${result}`
+            output.innerText = serverErrorResult;
+          }
+        });
+      };
+    </script>
+</head>
+<body class="container">
+
+<header>
+    <h1>Service Mesh Test Frontend App</h1>
+</header>
+
+<main>
+<div class="row">
+  <div class="col-sm-8">
+    <div class="jumbotron">
+      <h2>API Triggering Buttons</h2>
+      <p>Press one of these and watch the traces go!</p>
+      <button id="good-button">Good</button>
+      <button id="bad-button">Bad</button>
+      <button id="coin-button">Coin Flip</button>
+      <pre id="output"></pre>
+    </div>
+  </div>
+</div>
+</main>
+<script>
+  document.querySelector('#good-button').addEventListener('click', () => {
+    request('/good');
+  });
+  document.querySelector('#bad-button').addEventListener('click', () => {
+    request('/bad');
+  });
+  document.querySelector('#coin-button').addEventListener('click', () => {
+    request('/coinflip');
+  });
+  output = document.querySelector('#output');
+</script>
+
+</body>
+</html>

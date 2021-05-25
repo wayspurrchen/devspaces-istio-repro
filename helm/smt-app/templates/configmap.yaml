@@ -1,0 +1,10 @@
+{{- range .Values.instanceConfigs }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .appName }}-config
+data:
+  OTHER_APP_HOSTNAMES: {{ .otherAppHostnames }}
+  APP_NAME: {{ .appName }}
+{{- end }}
